@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres-db
+    restart: always
+    shm_size: 128mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: "Sh@shank9868b"
+      POSTGRES_DB: portfolio_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - global-network
+
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-panel
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: shashank.singh2016.ss@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: "Sh@shank9868b"
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - global-network
+
+volumes:
+  pgdata:
+  pgadmin_data:
+
+networks:
+  global-network:
+    external: true
