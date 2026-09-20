@@ -1,5 +1,6 @@
 volumes:
   ollama_data:
+  open-webui-data:
 
 services:
     ollama:
@@ -8,11 +9,6 @@ services:
       restart: always
       volumes:
         - ollama_data:/root/.ollama
-      networks:
-        - ai_network
-      dns:
-        - 8.8.8.8  # Google DNS
-        - 1.1.1.1  # Cloudflare DNS
       deploy:
         resources:
           reservations:
