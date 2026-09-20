@@ -1,0 +1,34 @@
+volumes:
+  ollama_data:
+
+services:
+    ollama:
+      image: ollama/ollama:latest
+      container_name: ollama_engine
+      restart: always
+      volumes:
+        - ollama_data:/root/.ollama
+      networks:
+        - ai_network
+      dns:
+        - 8.8.8.8  # Google DNS
+        - 1.1.1.1  # Cloudflare DNS
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: all
+                capabilities: [gpu]
+
+    open-webui:
+      image: ghcr.io/open-webui/open-webui:main
+      container_name: open_webui
+      environment:
+        # Connects out of the container to your host-network Ollama
+        - OLLAMA_BASE_URL=http://localhost:11434 
+      ports:
+        - "3005:8080"
+      volumes:
+        - open-webui-data:/app/backend/data
+      restart: always

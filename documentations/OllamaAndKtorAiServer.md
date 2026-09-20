@@ -5,6 +5,7 @@
 This pipeline utilizes a push-based SSH deployment strategy. Instead of building the Docker image on GitHub and pushing it to a registry, GitHub securely connects to the production server and triggers a local build.
 
 ### Step 1: Server Authentication Setup
+
 The server relies on asymmetric cryptography to authenticate GitHub without passwords. Run these commands on your Ubuntu server to generate and authorize the key:
 
 ```bash
